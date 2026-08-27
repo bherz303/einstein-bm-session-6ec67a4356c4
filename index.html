@@ -1,0 +1,718 @@
+<title>Internal Tool</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap">
+
+<style>
+  :root {
+    --orange: #EF8B22;
+    --blue: #0979C3;
+    --ink: #27343D;
+    --ink-2: #53575A;
+    --ink-3: #7C8288;
+    --ground: #F1F1EF;
+    --card: #FFFFFF;
+    --rule: #DEDFE0;
+    --rule-soft: #EAEAEA;
+    --flag: #B4611A;
+    --flag-bg: #FBF1E6;
+    --good: #69995d;
+
+    --sans: 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+    --display: 'Bebas Neue', 'Roboto Condensed', Impact, sans-serif;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --orange: #F5A24A;
+      --blue: #59B0E8;
+      --ink: #EDEFF1;
+      --ink-2: #B4BBC1;
+      --ink-3: #8A9299;
+      --ground: #171E24;
+      --card: #202A32;
+      --rule: #33404A;
+      --rule-soft: #2A353E;
+      --flag: #F0B173;
+      --flag-bg: #2B2419;
+      --good: #8FBF83;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --orange: #F5A24A;
+    --blue: #59B0E8;
+    --ink: #EDEFF1;
+    --ink-2: #B4BBC1;
+    --ink-3: #8A9299;
+    --ground: #171E24;
+    --card: #202A32;
+    --rule: #33404A;
+    --rule-soft: #2A353E;
+    --flag: #F0B173;
+    --flag-bg: #2B2419;
+    --good: #8FBF83;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink-2);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 56px 28px 96px;
+  }
+
+  /* ---------- masthead ---------- */
+
+  .masthead { border-bottom: 3px solid var(--ink); padding-bottom: 26px; }
+
+  .kicker {
+    font-family: var(--display);
+    font-size: 19px;
+    letter-spacing: 0.1em;
+    color: var(--orange);
+    line-height: 1;
+    margin: 0 0 14px;
+  }
+
+  h1 {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: clamp(32px, 5.4vw, 46px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin: 0 0 16px;
+    text-wrap: balance;
+  }
+
+  .standfirst {
+    font-size: 20px;
+    line-height: 1.5;
+    color: var(--ink-2);
+    margin: 0;
+    max-width: 62ch;
+  }
+
+  .facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    margin-top: 30px;
+    border-top: 1px solid var(--rule);
+    padding-top: 18px;
+  }
+
+  .fact {
+    flex: 1 1 150px;
+    padding-right: 20px;
+  }
+
+  .fact dt {
+    font-family: var(--display);
+    font-size: 14px;
+    letter-spacing: 0.11em;
+    color: var(--ink-3);
+    margin: 0 0 4px;
+  }
+
+  .fact dd {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  /* ---------- sections ---------- */
+
+  section { margin-top: 60px; }
+
+  .sec-head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 10px;
+    margin-bottom: 26px;
+  }
+
+  .sec-head h2 {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 25px;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  .sec-head .tag {
+    font-family: var(--display);
+    font-size: 15px;
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+    margin-left: auto;
+    white-space: nowrap;
+  }
+
+  p { margin: 0 0 18px; max-width: 68ch; }
+  p:last-child { margin-bottom: 0; }
+
+  strong { color: var(--ink); font-weight: 700; }
+  em { font-style: italic; }
+
+  a { color: var(--blue); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  a:focus-visible, .card:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+
+  .lede { font-size: 19px; color: var(--ink-2); }
+
+  /* ---------- premise strip ---------- */
+
+  .premise {
+    background: var(--card);
+    border-left: 4px solid var(--orange);
+    padding: 22px 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .premise .p-label {
+    font-family: var(--display);
+    font-size: 15px;
+    letter-spacing: 0.1em;
+    color: var(--ink-3);
+  }
+
+  .premise .p-line {
+    font-size: 21px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  /* ---------- prompt cards ---------- */
+
+  .prompts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(215px, 1fr));
+    gap: 16px;
+  }
+
+  .prompt {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    padding: 20px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .prompt h3 {
+    font-family: var(--display);
+    font-size: 24px;
+    letter-spacing: 0.04em;
+    color: var(--orange);
+    margin: 0;
+    line-height: 1;
+  }
+
+  .prompt p { font-size: 16px; line-height: 1.55; margin: 0; }
+
+  /* ---------- run of show ---------- */
+
+  .runofshow {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .slot {
+    display: grid;
+    grid-template-columns: 118px 1fr;
+    gap: 24px;
+    padding: 22px 0;
+    border-top: 1px solid var(--rule-soft);
+  }
+
+  .slot:first-child { border-top: 1px solid var(--rule); }
+
+  .slot-time {
+    font-family: var(--display);
+    font-size: 30px;
+    line-height: 1;
+    color: var(--ink);
+    letter-spacing: 0.02em;
+    font-variant-numeric: tabular-nums;
+    padding-top: 2px;
+  }
+
+  .slot-time .dur {
+    display: block;
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    margin-top: 6px;
+  }
+
+  .slot-body h3 {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 8px;
+  }
+
+  .slot-body p { font-size: 16.5px; margin: 0 0 10px; }
+  .slot-body p:last-child { margin-bottom: 0; }
+
+  .who {
+    display: inline-block;
+    font-family: var(--display);
+    font-size: 14px;
+    letter-spacing: 0.09em;
+    color: var(--ink-3);
+    border: 1px solid var(--rule);
+    padding: 2px 9px;
+    margin-top: 10px;
+  }
+
+  /* ---------- rules list ---------- */
+
+  ol.rules {
+    list-style: none;
+    counter-reset: r;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  ol.rules li {
+    counter-increment: r;
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 16px;
+    align-items: start;
+  }
+
+  ol.rules li::before {
+    content: counter(r);
+    font-family: var(--display);
+    font-size: 26px;
+    line-height: 1;
+    color: var(--orange);
+    padding-top: 3px;
+  }
+
+  ol.rules p { margin: 0; font-size: 16.5px; }
+
+  ul.plain {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  ul.plain li {
+    padding-left: 20px;
+    position: relative;
+    font-size: 16.5px;
+    max-width: 68ch;
+  }
+
+  ul.plain li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 11px;
+    width: 8px;
+    height: 2px;
+    background: var(--orange);
+  }
+
+  /* ---------- flag ---------- */
+
+  .flag {
+    background: var(--flag-bg);
+    border: 1px solid var(--flag);
+    padding: 20px 24px;
+    margin: 26px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .flag .f-label {
+    font-family: var(--display);
+    font-size: 15px;
+    letter-spacing: 0.1em;
+    color: var(--flag);
+  }
+
+  .flag p { font-size: 16.5px; margin: 0; }
+  .flag p + p { margin-top: 10px; }
+
+  /* ---------- decisions ---------- */
+
+  .decisions {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .decision {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-top: 3px solid var(--orange);
+    padding: 24px 26px;
+  }
+
+  .decision h3 {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 10px;
+  }
+
+  .decision p { font-size: 16.5px; margin: 0 0 12px; }
+
+  .rec {
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+    border-top: 1px solid var(--rule-soft);
+    padding-top: 12px;
+    margin-top: 4px;
+  }
+
+  .rec .rec-label {
+    font-family: var(--display);
+    font-size: 14px;
+    letter-spacing: 0.1em;
+    color: var(--good);
+    white-space: nowrap;
+  }
+
+  .rec p { margin: 0; font-size: 16px; }
+
+  /* ---------- table ---------- */
+
+  .tablewrap { overflow-x: auto; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+    min-width: 480px;
+  }
+
+  th, td {
+    text-align: left;
+    padding: 12px 14px 12px 0;
+    border-bottom: 1px solid var(--rule-soft);
+    vertical-align: top;
+  }
+
+  th {
+    font-family: var(--display);
+    font-size: 15px;
+    letter-spacing: 0.09em;
+    color: var(--ink-3);
+    border-bottom: 1px solid var(--rule);
+    font-weight: 400;
+  }
+
+  td:first-child {
+    color: var(--ink);
+    font-weight: 500;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ---------- footer ---------- */
+
+  .colophon {
+    margin-top: 70px;
+    padding-top: 20px;
+    border-top: 1px solid var(--rule);
+    font-size: 14.5px;
+    color: var(--ink-3);
+  }
+
+  .colophon p { max-width: none; margin: 0; }
+
+  @media (max-width: 620px) {
+    .wrap { padding: 40px 20px 72px; }
+    .slot { grid-template-columns: 1fr; gap: 8px; }
+    .slot-time { font-size: 26px; }
+    .slot-time .dur { display: inline; margin-left: 10px; }
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <p class="kicker">Branch Manager Session &middot; Blueprint</p>
+    <h1>Everyone talks in the first ten minutes.</h1>
+    <p class="standfirst">
+      A pair-first format for the 9/3 branch manager session on the training app. All ten managers pair
+      off, brief each other, then present their partner's notes to the room. Leadership listens,
+      records, and closes.
+    </p>
+
+    <dl class="facts">
+      <div class="fact"><dt>WHEN</dt><dd>Thu 9/3, 2:30&ndash;3:45 PM</dd></div>
+      <div class="fact"><dt>WHO</dt><dd>All 10 managers</dd></div>
+      <div class="fact"><dt>TOPIC</dt><dd>The training app, week one</dd></div>
+      <div class="fact"><dt>FOR REVIEW</dt><dd>Mike &amp; Cameron</dd></div>
+      <div class="fact"><dt>OWNER</dt><dd>Brian Herzig</dd></div>
+    </dl>
+  </header>
+
+  <section>
+    <div class="sec-head"><h2>Why change the format</h2></div>
+    <p class="lede">
+      The last several BM sessions have been quiet. The managers are vocal offline and silent in the
+      room, and when a problem surfaces they hand it up rather than solve it. That's the thing worth
+      fixing &mdash; not the agenda.
+    </p>
+    <p>
+      Pair-first attacks all three at once. Everyone speaks inside the first ten minutes, but to one
+      person instead of a room. Then each manager presents <em>their partner's</em> points, which is a
+      far easier thing to do than advocate for your own &mdash; you're reporting, not exposing yourself.
+      And because the pair has to hand something coherent to the room, they work the problem between
+      them before leadership ever hears it.
+    </p>
+    <p>
+      Leadership speaking only at the close is the other half. The moment a regional answers first, the
+      room goes back to receiving information.
+    </p>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>The premise</h2></div>
+    <div class="premise">
+      <span class="p-label">TAKEN AS DONE</span>
+      <p class="p-line">Every manager is trained. Every mover is enrolled. The app has been live for a week.</p>
+    </div>
+    <p style="margin-top:22px;">
+      No status updates, no completion percentages, no branch-by-branch review. That's finished business
+      and it shouldn't take a minute of this meeting. The question on the table is what the first week
+      of real use actually looked like.
+    </p>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>What managers bring</h2>
+      <span class="tag">POSTED IN ADVANCE</span>
+    </div>
+    <p>Three items, written down, on the training app only. They bring these to the room &mdash; the notes are the ticket in.</p>
+    <div class="prompts">
+      <div class="prompt">
+        <h3>One win</h3>
+        <p>Something the app made better, or something you did that got a crew genuinely using it. Name the crew, name the day.</p>
+      </div>
+      <div class="prompt">
+        <h3>One loss</h3>
+        <p>What's breaking in practice. Friction on the truck, confusion, workarounds people invented, what your movers complain about.</p>
+      </div>
+      <div class="prompt">
+        <h3>Opportunity or constraint</h3>
+        <p>The one thing that would make it stick &mdash; or the one thing standing in the way.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Run of show</h2>
+      <span class="tag">10 MANAGERS &middot; 75 MINUTES</span>
+    </div>
+
+    <div class="runofshow">
+
+      <div class="slot">
+        <div class="slot-time">2:30<span class="dur">5 min</span></div>
+        <div class="slot-body">
+          <h3>Open and pair off</h3>
+          <p>Frame it in two sentences: one topic, everyone presents, leadership talks at the end. Say
+          out loud that the session is being recorded and run through AI analysis afterward.</p>
+          <p>Pairs are pre-assigned &mdash; read them out and send them off.</p>
+          <span class="who">LEADERSHIP</span>
+        </div>
+      </div>
+
+      <div class="slot">
+        <div class="slot-time">2:35<span class="dur">10 min</span></div>
+        <div class="slot-body">
+          <h3>Pairs brief each other</h3>
+          <p>Five minutes each way. You are not swapping complaints &mdash; you are taking notes you'll
+          have to deliver accurately in front of the room. Clarifying questions only.</p>
+          <p>Leadership stays out of the pairs entirely.</p>
+          <span class="who">MANAGERS, IN PAIRS</span>
+        </div>
+      </div>
+
+      <div class="slot">
+        <div class="slot-time">2:45<span class="dur">50 min &middot; 5 min each</span></div>
+        <div class="slot-body">
+          <h3>All ten present their partner's notes</h3>
+          <p>Timer on the screen, hard stop at five. Win, loss, opportunity or constraint &mdash; in that
+          order, so the room hears something working before it hears something broken.</p>
+          <p>The partner gets fifteen seconds at the end to correct anything misrepresented. That single
+          mechanic is what keeps people listening properly during the pairing.</p>
+          <p>Leadership takes notes and does not respond. Questions get written down, not asked.</p>
+          <span class="who">MANAGERS, TO THE ROOM</span>
+        </div>
+      </div>
+
+      <div class="slot">
+        <div class="slot-time">3:35<span class="dur">10 min</span></div>
+        <div class="slot-body">
+          <h3>Leadership debrief and close</h3>
+          <p>Short. Name the two or three themes that showed up in more than one branch, say what happens
+          to them, and commit to a date for the follow-up. Then break.</p>
+          <p>No decisions invented on the spot &mdash; the value of this meeting is the recording and what
+          gets built from it.</p>
+          <span class="who">LEADERSHIP</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="flag">
+      <span class="f-label">WORTH DECIDING BEFORE 9/3</span>
+      <p>
+        Fifty minutes of consecutive presenting is the one place this sags &mdash; attention goes somewhere
+        around presenter six or seven. It also puts the meeting at 75 minutes, past the under-an-hour bar
+        this format was meant to hold.
+      </p>
+      <p>
+        <strong>Four minutes each puts you at 65 minutes; three puts you at 55.</strong> Three items in three
+        minutes is tight but real, and a tighter clock usually sharpens the delivery rather than thinning it.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>How the pairs get built</h2></div>
+    <ul class="plain">
+      <li><strong>Pre-assigned, never self-selected.</strong> Left to choose, people pick who they already talk to and the whole point evaporates.</li>
+      <li><strong>Never same branch, and cross-region wherever possible.</strong> A different rollout experience, no shared local politics, and it builds the peer network across regions that doesn't currently exist.</li>
+      <li><strong>Rotate every session.</strong> Same pairs twice and it calcifies back into the comfortable conversation.</li>
+      <li><strong>Odd number makes a trio, not a leadership pair.</strong> Putting a regional in a pair breaks the one rule the format depends on. A trio runs four minutes a leg instead of five.</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>Rules of the room</h2></div>
+    <ol class="rules">
+      <li><p><strong>Leadership speaks last.</strong> Not "mostly last." The first regional to answer a question ends the meeting you were trying to have.</p></li>
+      <li><p><strong>You present your partner, not yourself.</strong> If you find yourself saying "and what I think is" &mdash; that's your turn being taken by someone else later.</p></li>
+      <li><p><strong>Nothing gets solved in the room.</strong> This session collects; the follow-up decides. Says so up front, so nobody leaves feeling their item disappeared.</p></li>
+      <li><p><strong>Everyone presents.</strong> No passing, no "mine's the same as his." Ten managers, ten turns.</p></li>
+    </ol>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>After the meeting</h2></div>
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr><th>WHEN</th><th>WHAT</th><th>WHO</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Same day</td><td>Recording through AI analysis; raw themes pulled out</td><td>Leadership</td></tr>
+          <tr><td>Within 24 hrs</td><td>Talking points condensed into a short action list &mdash; owner and date on each</td><td>Leadership</td></tr>
+          <tr><td>Within 24 hrs</td><td>Follow-up Delegation Board pulse to all managers, company-wide, with what was decided</td><td>Brian</td></tr>
+          <tr><td>Ongoing</td><td>Items that need the app or module itself to change get routed as one consolidated list rather than ten separate complaints</td><td>Brian &rarr; Mike</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:20px;">
+      The follow-up pulse is load-bearing. Because nothing is decided in the room, that post <em>is</em> the
+      outcome &mdash; if it slips a week, the next session's notes come back thin and the format gets blamed
+      for it.
+    </p>
+  </section>
+
+  <section>
+    <div class="sec-head">
+      <h2>Calls to make today</h2>
+      <span class="tag">MIKE &amp; CAMERON</span>
+    </div>
+
+    <div class="premise" style="margin-bottom:26px;">
+      <span class="p-label">SETTLED</span>
+      <p class="p-line">All ten managers, both regions. The clock is built on it &mdash; 2:45 plus ten turns lands on 3:35.</p>
+    </div>
+
+    <div class="decisions">
+
+      <div class="decision">
+        <h3>1. Five minutes each, or four?</h3>
+        <p>
+          Five keeps the depth and runs 75 minutes. Four runs 65. Three runs 55 and holds the
+          under-an-hour principle this whole format was built around.
+        </p>
+        <div class="rec">
+          <span class="rec-label">RECOMMEND</span>
+          <p>Four for the first run. Long enough for three real items, short enough that the back half of the room is still listening.</p>
+        </div>
+      </div>
+
+      <div class="decision">
+        <h3>2. Who from leadership is in the room?</h3>
+        <p>
+          With ten managers and four leaders, "leadership speaks last" stops being a rule and becomes a
+          queue &mdash; and a manager counting four executives waiting to respond presents differently
+          than one facing two.
+        </p>
+        <div class="rec">
+          <span class="rec-label">RECOMMEND</span>
+          <p>Two. Brian plus Mike, given it's his module. Cameron on the recording rather than in the room for round one.</p>
+        </div>
+      </div>
+
+      <div class="decision">
+        <h3>3. Do the written notes get posted in advance, or stay with the manager?</h3>
+        <p>
+          Posting them to the Delegation Board beforehand guarantees preparation and gives leadership a
+          read before walking in. It also means every manager writes knowing nine peers will read it,
+          which is the exact audience problem this format exists to solve.
+        </p>
+        <div class="rec">
+          <span class="rec-label">RECOMMEND</span>
+          <p>Announce the prompt on the DB pulse; managers bring their notes with them rather than posting. Prepared, but not performing.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="colophon">
+    <p>
+      Draft blueprint, 8/27/2026 &middot; format untested &mdash; first of several the team plans to try
+      before settling &middot; prepared by Vera, Brian's AI Chief of Staff
+    </p>
+  </div>
+
+</div>
